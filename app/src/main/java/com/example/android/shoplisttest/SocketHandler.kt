@@ -47,6 +47,7 @@ class SocketHandler(context: ISocketListener) {
 
     @Synchronized
     fun openConnection() {
+        createSocketConnection()
         ws.connectAsynchronously()
     }
 

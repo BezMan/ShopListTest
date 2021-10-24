@@ -16,9 +16,6 @@ class MainActivity : AppCompatActivity(), SocketHandler.ISocketListener {
 
         initUI()
 
-        socketHandler.createSocketConnection()
-
-
 
 
     }
