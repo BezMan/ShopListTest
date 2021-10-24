@@ -35,10 +35,9 @@ class SocketHandler(context: ISocketListener) {
 
                 override fun onError(websocket: WebSocket?, cause: WebSocketException?) {
                     super.onError(websocket, cause)
-                    Log.d("TAG", "error: $cause")
+                    Log.d("zzzzz", "error: $cause")
                 }
             })
-            ws.connectAsynchronously();
 
         } catch (e: Exception) {
 
@@ -48,7 +47,7 @@ class SocketHandler(context: ISocketListener) {
 
     @Synchronized
     fun openConnection() {
-        ws.connect()
+        ws.connectAsynchronously()
     }
 
     @Synchronized
