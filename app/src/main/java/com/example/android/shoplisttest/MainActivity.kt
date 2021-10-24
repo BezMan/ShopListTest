@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), SocketHandler.ISocketListener,
     }
 
     private fun setupListAdapter() {
-        shopListAdapter = ShopListAdapter(this)
+        shopListAdapter = ShopListAdapter(this, list)
         recyclerView.apply {
             adapter = shopListAdapter
             layoutManager = LinearLayoutManager(context)

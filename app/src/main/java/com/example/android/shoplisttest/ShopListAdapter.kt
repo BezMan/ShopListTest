@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class ShopListAdapter(context: MyItemClickListener) : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
+class ShopListAdapter(context: MyItemClickListener, list: MutableList<ShopItem>) : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
     private var listener: MyItemClickListener = context
 
