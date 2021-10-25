@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SocketHandler.ISocketListener,
@@ -14,9 +13,8 @@ class MainActivity : AppCompatActivity(), SocketHandler.ISocketListener,
 
     private val socketHandler = SocketHandler(this)
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var shopListAdapter: ShopListAdapter
-    private var list : MutableList<ShopItem> = mutableListOf()
+    private var list : ArrayList<ShopItem> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +23,14 @@ class MainActivity : AppCompatActivity(), SocketHandler.ISocketListener,
         initUI()
         setupListAdapter()
 
+
+        connBtn.performClick()
+
     }
 
     private fun initUI() {
 
-        recyclerView = recView
-        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        recView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         connBtn.setOnClickListener {
             if(connBtn.text =="Connect") {
@@ -45,18 +45,26 @@ class MainActivity : AppCompatActivity(), SocketHandler.ISocketListener,
 
     private fun setupListAdapter() {
         shopListAdapter = ShopListAdapter(this, list)
-        recyclerView.apply {
-            adapter = shopListAdapter
+        shopListAdapter.setHasStableIds(true)
+
+
+        recView.apply {
             layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = shopListAdapter
+
+
         }
     }
 
 
-    override fun onDataReceived(message: String) {
-        Log.d("zzzzz", "onTextMessage: $message")
+    override fun onDataReceived(item: ShopItem) {
+        Log.d("zzzzz", "onTextMessage: $item")
 
-        list.add(ShopItem("", message, message))
+        list.add(0, ShopItem(list.size.toLong(), "", item.name, item.weight))
         shopListAdapter.notifyItemInserted(0)
+
+        recView.smoothScrollToPosition(0)
 
     }
 

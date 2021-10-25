@@ -2,6 +2,7 @@ package com.example.android.shoplisttest
 
 import android.util.Log
 import com.example.android.shoplisttest.Consts.SOCKET_URI
+import com.google.gson.Gson
 import com.neovisionaries.ws.client.WebSocket
 import com.neovisionaries.ws.client.WebSocketAdapter
 import com.neovisionaries.ws.client.WebSocketException
@@ -14,7 +15,7 @@ class SocketHandler(context: ISocketListener) {
 
 
     interface ISocketListener {
-        fun onDataReceived(message: String)
+        fun onDataReceived(item: ShopItem)
     }
 
     @Synchronized
@@ -30,7 +31,8 @@ class SocketHandler(context: ISocketListener) {
             ws.addListener(object : WebSocketAdapter() {
 
                 override fun onTextMessage(websocket: WebSocket, message: String) {
-                    listener.onDataReceived(message)
+                    var shopItem = Gson().fromJson(message, ShopItem::class.java)
+                    listener.onDataReceived(shopItem)
                 }
 
                 override fun onError(websocket: WebSocket?, cause: WebSocketException?) {
